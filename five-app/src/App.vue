@@ -11,7 +11,7 @@ const toggleDarkMode = () => {
 </script>
 
 <template>
-  <div>
+  <div class="width-100 height-100">
     <Button label="Toggle Dark Mode" @click="toggleDarkMode" />
     <Card title="Card Title" style="margin-top: 2rem;">
       <template #content>
