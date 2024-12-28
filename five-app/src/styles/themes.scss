@@ -12,4 +12,10 @@ html.my-app-dark {
   .p-button {
     margin: 0.5rem;
   }
-  
+
+  body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
