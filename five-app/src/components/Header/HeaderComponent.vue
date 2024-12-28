@@ -12,7 +12,6 @@ const { toggleDarkMode } = useTheme();
         <a href="#" class="logo">PhotoUpload</a>
       </div>
 
-      <!-- Links -->
       <nav class="navbar-links">
         <ul>
           <li><a href="#">Home</a></li>
@@ -21,7 +20,6 @@ const { toggleDarkMode } = useTheme();
         </ul>
       </nav>
 
-      <!-- Botões -->
       <div class="navbar-actions">
         <button class="dark-mode-toggle" @click="toggleDarkMode">Modo Escuro</button>
         <button class="login-button">Login</button>
@@ -31,24 +29,24 @@ const { toggleDarkMode } = useTheme();
 </template>
 
 <style scoped>
-/* Navbar fixo com aparência de espelho */
+
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.8); /* Transparência */
-  backdrop-filter: blur(10px); /* Efeito de espelho */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  background-color: rgba(0, 0, 0, 0.7); 
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); 
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 html.my-app-dark .navbar {
-  background-color: rgba(0, 0, 0, 0.8); /* Cor para modo escuro */
+  background-color: rgba(0, 0, 0, 0.9); 
   color: #fff;
 }
 
-/* Conteúdo do Navbar */
+
 .navbar-content {
   display: flex;
   justify-content: space-between;
@@ -62,8 +60,13 @@ html.my-app-dark .navbar {
 .navbar-brand .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: inherit;
+  color: white;
   text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand .logo:hover {
+  color: #ff6347; 
 }
 
 /* Links */
@@ -77,16 +80,17 @@ html.my-app-dark .navbar {
 
 .navbar-links a {
   text-decoration: none;
-  color: inherit;
+  color: white;
   font-size: 1rem;
-  transition: color 0.3s;
+  transition: color 0.3s, text-shadow 0.3s ease;
 }
 
 .navbar-links a:hover {
-  color: #007bff;
+  color: #ff6347;
+  text-shadow: 0 0 10px rgba(255, 99, 71, 0.8); 
 }
 
-/* Botões */
+/* Ações */
 .navbar-actions {
   display: flex;
   align-items: center;
@@ -98,33 +102,35 @@ html.my-app-dark .navbar {
   border: none;
   background-color: transparent;
   cursor: pointer;
-  color: inherit;
-  transition: color 0.3s;
+  color: white;
+  transition: color 0.3s, text-shadow 0.3s ease;
 }
 
 .dark-mode-toggle:hover {
-  color: #007bff;
+  color: #ff6347;
+  text-shadow: 0 0 10px rgba(255, 99, 71, 0.8);
 }
 
 .login-button {
   padding: 0.5rem 1rem;
-  border: 1px solid #007bff;
-  background-color: #007bff;
-  color: #fff;
+  border: 1px solid #ff6347;
+  background-color: transparent;
+  color: white;
   cursor: pointer;
   border-radius: 4px;
-  transition: background-color 0.3s, border-color 0.3s;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
 .login-button:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
+  background-color: #ff6347;
+  border-color: #ff6347;
+  box-shadow: 0 4px 8px rgba(255, 99, 71, 0.6);
 }
 
-/* Responsividade */
+
 @media (max-width: 768px) {
   .navbar-links {
-    display: none; /* Esconde os links no mobile */
+    display: none; 
   }
 
   .navbar-actions {

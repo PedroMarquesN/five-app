@@ -21,9 +21,7 @@ defineOptions({
   padding: 0;
 }
 
-.section {
-  padding: 20px;
-}
+
 
 .banner-section {
   display: flex;
