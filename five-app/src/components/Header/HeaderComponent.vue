@@ -1,4 +1,5 @@
 <script setup>
+import { RouterLink } from 'vue-router';
 import { useTheme } from '../../composables/useTheme';
 
 const { toggleDarkMode } = useTheme();
@@ -7,9 +8,9 @@ const { toggleDarkMode } = useTheme();
 <template>
   <header class="navbar">
     <div class="navbar-content">
-      <!-- Logo -->
+   
       <div class="navbar-brand">
-        <a href="#" class="logo">PhotoUpload</a>
+        <a href="/" class="logo">PhotoUpload</a>
       </div>
 
       <nav class="navbar-links">
@@ -21,8 +22,9 @@ const { toggleDarkMode } = useTheme();
       </nav>
 
       <div class="navbar-actions">
-        <button class="dark-mode-toggle" @click="toggleDarkMode">Modo Escuro</button>
-        <button class="login-button">Login</button>
+        <RouterLink to="/login">
+          <button class="login-button">Login</button>
+        </RouterLink>
       </div>
     </div>
   </header>
