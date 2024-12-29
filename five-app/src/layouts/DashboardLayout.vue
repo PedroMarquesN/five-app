@@ -15,28 +15,40 @@
       </div>
       <ul>
         <li>
-          <i class="pi pi-home"></i>
-          <span v-if="sidebarVisible">Home</span>
+          <router-link to="/dashboard" class="no-underline">
+            <i class="pi pi-home"></i>
+            <span v-if="sidebarVisible">Home</span>
+          </router-link>
         </li>
         <li>
-          <i class="pi pi-user"></i>
-          <span v-if="sidebarVisible">Profile</span>
+          <router-link to="/dashboard/profile" class="no-underline">
+            <i class="pi pi-user"></i>
+            <span v-if="sidebarVisible">Profile</span>
+          </router-link>
         </li>
         <li>
-          <i class="pi pi-cog"></i>
-          <span v-if="sidebarVisible">Configurações</span>
+          <router-link to="/dashboard/settings" class="no-underline">
+            <i class="pi pi-cog"></i>
+            <span v-if="sidebarVisible">Configurações</span>
+          </router-link>
         </li>
         <li>
-          <i class="pi pi-upload"></i>
-          <span v-if="sidebarVisible">Upload Photos</span>
-        </li>
-        <li >
-          <i class="pi pi-check-circle"></i>
-          <span v-if="sidebarVisible">Aprovação Uploads</span>
+          <router-link to="/dashboard/upload-photos" class="no-underline">
+            <i class="pi pi-upload"></i>
+            <span v-if="sidebarVisible">Upload Photos</span>
+          </router-link>
         </li>
         <li>
-          <i class="pi pi-sign-out"></i>
-          <span v-if="sidebarVisible">Logout</span>
+          <router-link to="/dashboard/approve-uploads" class="no-underline">
+            <i class="pi pi-check-circle"></i>
+            <span v-if="sidebarVisible">Aprovação Uploads</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/login" class="no-underline">
+            <i class="pi pi-sign-out"></i>
+            <span v-if="sidebarVisible">Logout</span>
+          </router-link>
         </li>
       </ul>
     </aside>
@@ -58,7 +70,9 @@ const toggleSidebar = () => {
 </script>
 
 <style scoped>
-/* Estilo Geral */
+.no-underline {
+  text-decoration: none;
+}
 .dashboard {
   display: flex;
   height: 100vh;
