@@ -16,6 +16,16 @@ const routes = [
       },
     ]
   },
+  {
+    path: '/dashboard',
+    component: () => import('../layouts/DashboardLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('../pages/Dashboard/HomePage.vue')
+      }
+    ]
+  }
 
 ]
 
