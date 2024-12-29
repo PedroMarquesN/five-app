@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuth } from '../composables/useAuth.ts';
 
 const routes = [
   {
@@ -21,6 +22,7 @@ const routes = [
   {
     path: '/dashboard',
     component: () => import('../layouts/DashboardLayout.vue'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
@@ -45,6 +47,7 @@ const routes = [
         path: 'approve-uploads',
         component: () => import('../pages/Dashboard/ApproveUploads.vue'),
         name: 'approve-uploads',
+       
       }
     ]
   }
@@ -54,5 +57,20 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const { isAuthenticated , isAdmin } = useAuth();
+
+  if (to.name === 'login' && isAuthenticated.value) {
+      next('/dashboard');
+  }
+
+  if (to.meta.requiresAuth && !isAuthenticated.value) {
+      next('/login');
+  } else {
+      next();
+  }
+
+});
 
 export default router
