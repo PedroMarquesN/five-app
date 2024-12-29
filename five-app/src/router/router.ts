@@ -1,7 +1,4 @@
-
 import { createRouter, createWebHistory } from 'vue-router'
-
-
 
 const routes = [
   {
@@ -22,11 +19,30 @@ const routes = [
     children: [
       {
         path: '',
-        component: () => import('../pages/Dashboard/HomePage.vue')
+        component: () => import('../pages/Dashboard/HomePage.vue'),
+      },
+      {
+        path: 'profile',
+        component: () => import('../pages/Dashboard/Profile.vue'),
+        name: 'profile',
+      },
+      {
+        path: 'settings',
+        component: () => import('../pages/Dashboard/Config.vue'),
+        name: 'settings',
+      },
+      {
+        path: 'upload-photos',
+        component: () => import('../pages/Dashboard/Uploads.vue'),
+        name: 'upload-photos',
+      },
+      {
+        path: 'approve-uploads',
+        component: () => import('../pages/Dashboard/ApproveUploads.vue'),
+        name: 'approve-uploads',
       }
     ]
   }
-
 ]
 
 const router = createRouter({
