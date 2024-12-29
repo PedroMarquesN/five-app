@@ -50,7 +50,7 @@
   
   .profile-info p {
     font-size: 1rem;
-    color: #ddd;
+    color: #776e6e;
   }
   
   button {
@@ -66,5 +66,7 @@
   button:hover {
     background-color: #e04e36;
   }
+
+  
   </style>
   

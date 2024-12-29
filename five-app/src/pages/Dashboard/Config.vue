@@ -63,6 +63,12 @@
     border: 1px solid #ddd;
     border-radius: 5px;
   }
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #ff6347;
+    box-shadow: 0 0 5px rgba(255, 99, 71, 0.5);
+  }
   
   button {
     background-color: #ff6347;

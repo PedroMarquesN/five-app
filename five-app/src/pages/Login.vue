@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-
+const router = useRouter();
 const username = ref('');
 const password = ref('');
 
@@ -10,11 +11,17 @@ const handleSubmit = () => {
   console.log('Usuário:', username.value);
   console.log('Senha:', password.value);
 };
+const navigateToRegister = () => {
+  router.push('/register');
+};
 </script>
 
 <template>
     <div class="login-container">
       <div class="login-card">
+        <div class="register-link">
+          <span>Não possui conta? <a @click="navigateToRegister">Clique aqui</a></span>
+        </div>
         
         <div class="login-title">Login</div>
   
@@ -81,7 +88,22 @@ const handleSubmit = () => {
       background-position: 0% 50%;
     }
   }
+  .register-link {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #333;
+  }
   
+  .register-link a {
+    color: #ff6347;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .register-link a:hover {
+    color: #8f220f;
+  }
 
   .login-card {
     background-color: #fff;
