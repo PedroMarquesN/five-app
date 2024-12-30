@@ -2,10 +2,10 @@
 import { ref, onMounted } from 'vue';
 import { fetchUploads, approveUpload, rejectUpload } from '../../utils/api';
 import { useToast } from 'primevue/usetoast';
+import Swal from 'sweetalert2'
 
 const toast = useToast();
 const uploads = ref([]);
-
 
 
 const loadUploads = async () => {
@@ -21,14 +21,38 @@ const handleApproveUpload = async (id) => {
     await approveUpload(id);
     const upload = uploads.value.find((upload) => upload.id === id);
     upload.status = 'aprovado';
-    toast.add({
-      severity: 'success',
-      summary: 'Foto aprovada',
-      detail: 'A foto foi aprovada com sucesso!',
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
     });
+    Toast.fire({
+      icon: "success",
+      title: "Pedido Aprovado!"
+    });
+
   } catch (error) {
-    console.error('Erro ao aprovar a foto:', error);
-    alert('Erro ao aprovar a foto');
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "error",
+      title: "Pedido não aprovado!"
+    });
   }
 };
 
@@ -37,10 +61,19 @@ const handleRejectUpload = async (id) => {
     await rejectUpload(id);
     const upload = uploads.value.find((upload) => upload.id === id);
     upload.status = 'rejeitado';
-    alert('Foto rejeitada com sucesso!');
+    Swal.fire({
+      position: "top-end",
+      title: "Foto Rejeitada!",
+      icon: "success",
+      timer: 1500,
+    });
   } catch (error) {
-    console.error('Erro ao rejeitar a foto:', error);
-    alert('Erro ao rejeitar a foto');
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Algo Deu errado",
+
+    });
   }
 };
 
@@ -65,7 +98,7 @@ onMounted(loadUploads);
         <tr v-for="upload in uploads" :key="upload.id">
           <td><img :src="upload.image" alt="Upload" class="upload-img" /></td>
           <td>{{ upload.titulo }}</td>
-          <td>{{upload.criado_em}}</td>
+          <td>{{ upload.criado_em }}</td>
           <td>{{ upload.user.name }}</td>
           <td>{{ upload.status }}</td>
           <td>

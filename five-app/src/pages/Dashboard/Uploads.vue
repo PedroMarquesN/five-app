@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { apiRequest } from '../../utils/apiRequest';
-import { useToast } from 'primevue/usetoast';
+import Swal from 'sweetalert2';
 
-const toast = useToast();
+
 const uploads = ref([]);
 const photos = ref([]);
 const title = ref('');
@@ -19,8 +19,23 @@ const handleFileChange = (event) => {
 const uploadPhotos = async () => {
   try {
     if (!localData.value.image || !title.value || !description.value) {
-      alert('Por favor, preencha todos os campos e selecione uma imagem!');
-      return;
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "error",
+        title: "Informe os dados."
+      });
+      title.
+        return;
     }
 
     const formData = new FormData();
@@ -29,10 +44,20 @@ const uploadPhotos = async () => {
     formData.append('descricao', description.value);
 
     const responseData = await apiRequest('http://five-api.test/api/photos', 'POST', formData);
-    toast.add({
-      severity: 'success',
-      summary: 'Foto aprovada',
-      detail: 'A foto foi aprovada com sucesso!',
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Enviado com sucesso!"
     });
     title.value = '';
     description.value = '';
