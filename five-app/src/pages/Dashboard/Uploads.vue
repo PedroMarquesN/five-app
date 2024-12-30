@@ -2,8 +2,9 @@
 import { ref } from 'vue';
 import { apiRequest } from '../../utils/apiRequest';
 import Swal from 'sweetalert2';
+import { useRouter } from 'vue-router';
 
-
+const {push} = useRouter();
 const uploads = ref([]);
 const photos = ref([]);
 const title = ref('');
@@ -35,6 +36,7 @@ const uploadPhotos = async () => {
         title: "Informe os dados."
       });
       title.
+     
         return;
     }
 
@@ -59,6 +61,7 @@ const uploadPhotos = async () => {
       icon: "success",
       title: "Enviado com sucesso!"
     });
+    push('/dashboard');
     title.value = '';
     description.value = '';
     localData.value.image = null;

@@ -3,6 +3,8 @@ import { ref } from 'vue';
 interface LoginResponse {
   token?: string;
   is_admin?: number;
+  name?: string;
+  email?: string;
   message?: string;
 }
 
@@ -14,6 +16,8 @@ export function useAuth() {
   const token = ref<string | null>(localStorage.getItem('token') ?? null);
   const isAdmin = ref<boolean>(localStorage.getItem('is_admin') === 'true');
   const isAuthenticated = ref<boolean>(!!token.value);
+  const userName = ref<string | null>(localStorage.getItem('name') ?? null);
+  const userEmail = ref<string | null>(localStorage.getItem('email') ?? null);
 
   const login = async (email: string, password: string): Promise<void> => {
     const response = await fetch('http://five-api.test/api/login', {
@@ -30,9 +34,13 @@ export function useAuth() {
       token.value = data.token;
       const isAdminValue = data.is_admin === 1 ? 'true' : 'false';
       isAdmin.value = isAdminValue === 'true';
+      userName.value = data.name ?? '';
+      userEmail.value = data.email ?? '';
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('is_admin', isAdminValue);
+      localStorage.setItem('name', userName.value);
+      localStorage.setItem('email', userEmail.value);
       isAuthenticated.value = true;
     } else {
       isAuthenticated.value = false;
@@ -71,8 +79,12 @@ export function useAuth() {
   const logout = (): void => {
     token.value = null;
     isAdmin.value = false;
+    userName.value = null;
+    userEmail.value = null;
     localStorage.removeItem('token');
     localStorage.removeItem('is_admin');
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
     isAuthenticated.value = false;
   };
 
@@ -80,6 +92,8 @@ export function useAuth() {
     token,
     isAdmin,
     isAuthenticated,
+    userName,
+    userEmail,
     login,
     logout,
     register,

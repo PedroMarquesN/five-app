@@ -5,11 +5,11 @@
         <h2>Photos Uploaded</h2>
         <p>{{ dashboardData.photosUploaded }}</p>
       </div>
-      <div class="card">
+      <div class="card" v-if="isAdmin">
         <h2>Pedidos para Aprovar</h2>
         <p>{{ dashboardData.pendingApprovals }}</p>
       </div>
-      <div class="card">
+      <div v-if="isAdmin" class="card">
         <h2>Usuários Registrados</h2>
         <p>{{ dashboardData.registeredUsers }}</p>
       </div>
@@ -25,6 +25,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import Chart from 'chart.js/auto';
+import { useAuth } from '../../composables/useAuth';
+
+const { isAdmin } = useAuth();
 
 const dashboardData = ref({
   photosUploaded: 0,
