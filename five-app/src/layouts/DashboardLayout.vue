@@ -45,7 +45,7 @@
           </router-link>
         </li>
         <li v-if="isAdmin">
-          <router-link to="/dashboard/uploads" class="no-underline">
+          <router-link to="/dashboard/users" class="no-underline">
             <i class="pi pi-users"></i>
             <span v-if="sidebarVisible">Usuários</span>
           </router-link>

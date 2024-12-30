@@ -16,7 +16,7 @@ interface UploadResponse {
   user: string;
   caminho: string;
 }
-interface Meta {
+export interface Meta {
   total: number;
   page: number;
   limit: number;
@@ -42,31 +42,12 @@ interface ApiResponse {
   caminho: string;
 }
 
-interface UserResponse {
-  id: number;
-  name: string;
-  email: string;
- 
-}
+
 
 const API_BASE_URL = 'http://five-api.test/';
 
 
-export const fetchUser = async () => {
-  try {
-    const response = await apiRequest(`${API_BASE_URL}api/user`);
-    const data = response.data as UserResponse;
-    return {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-      
-    };
-  } catch (error) {
-    console.error('Erro ao buscar dados do usuário:', error);
-    throw error;
-  }
-};
+
 
 export const fetchUploads = async (page = 1, limit = 5) => {
   try {
