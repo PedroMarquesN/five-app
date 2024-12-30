@@ -38,21 +38,21 @@
             <span v-if="sidebarVisible">Upload Photos</span>
           </router-link>
         </li>
-        <li>
+        <li v-if="isAdmin">
           <router-link to="/dashboard/approve-uploads" class="no-underline">
             <i class="pi pi-check-circle"></i>
             <span v-if="sidebarVisible">Aprovação Uploads</span>
           </router-link>
         </li>
         <li>
-          <router-link to="/login" class="no-underline">
+          <router-link  @click="handleLogout" to="/" class="no-underline">
             <i class="pi pi-sign-out"></i>
             <span v-if="sidebarVisible">Logout</span>
           </router-link>
         </li>
       </ul>
     </aside>
-    <!-- Content -->
+
     <main class="content" :class="{ shifted: sidebarVisible }">
       <router-view />
     </main>
@@ -61,8 +61,16 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useAuth } from '../composables/useAuth';
 
+const { logout, isAdmin } = useAuth();
 const sidebarVisible = ref(false);
+console.log(isAdmin.value);
+
+
+const handleLogout = () => {
+  logout();
+};
 
 const toggleSidebar = () => {
   sidebarVisible.value = !sidebarVisible.value;

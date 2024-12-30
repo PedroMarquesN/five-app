@@ -3,15 +3,15 @@
     <div class="grid">
       <div class="card">
         <h2>Photos Uploaded</h2>
-        <p>5,432</p>
+        <p>{{ dashboardData.photosUploaded }}</p>
       </div>
       <div class="card">
         <h2>Pedidos para Aprovar</h2>
-        <p>321</p>
+        <p>{{ dashboardData.pendingApprovals }}</p>
       </div>
       <div class="card">
         <h2>Usuários Registrados</h2>
-        <p>12,345</p>
+        <p>{{ dashboardData.registeredUsers }}</p>
       </div>
     </div>
 
@@ -23,10 +23,37 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import Chart from 'chart.js/auto';
 
-onMounted(() => {
+const dashboardData = ref({
+  photosUploaded: 0,
+  pendingApprovals: 0,
+  registeredUsers: 0,
+});
+
+const fetchDashboardData = async () => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch('http://five-api.test/api/dashboard', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) throw new Error('Erro ao buscar dados do dashboard');
+
+    const data = await response.json();
+    dashboardData.value = data;
+  } catch (error) {
+    console.error('Erro ao buscar dados do dashboard:', error);
+  }
+};
+
+onMounted(async () => {
+  await fetchDashboardData();
+
   const ctx = document.getElementById('uploadChart').getContext('2d');
   new Chart(ctx, {
     type: 'line',
@@ -52,7 +79,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -133,7 +159,6 @@ onMounted(() => {
   }
 }
 
-
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr; 
@@ -143,7 +168,6 @@ onMounted(() => {
   .card {
     padding: 1rem; 
     font-size: 0.9rem; 
-   
   }
 
   .chart {
@@ -155,5 +179,4 @@ onMounted(() => {
     font-size: 1.2rem;
   }
 }
-
 </style>

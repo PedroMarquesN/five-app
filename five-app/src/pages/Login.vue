@@ -1,15 +1,23 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useAuth } from '../composables/useAuth.ts';
 
 const router = useRouter();
+
 const username = ref('');
 const password = ref('');
 
+const {login} = useAuth();
+const {push} = useRouter();
 
-const handleSubmit = () => {
-  console.log('Usuário:', username.value);
-  console.log('Senha:', password.value);
+const asynchandleSubmit = async () => {
+try{
+  await login(username.value, password.value);
+  push('/dashboard');
+} catch (error) {
+  console.error(error);
+}
 };
 const navigateToRegister = () => {
   router.push('/register');
@@ -55,7 +63,7 @@ const navigateToRegister = () => {
   
          
           <div class="text-center">
-            <button type="submit" class="login-button">Entrar</button>
+            <button type="submit" @click="asynchandleSubmit" class="login-button">Entrar</button>
           </div>
         </form>
       </div>
