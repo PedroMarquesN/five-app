@@ -44,6 +44,12 @@
             <span v-if="sidebarVisible">Aprovação Uploads</span>
           </router-link>
         </li>
+        <li v-if="isAdmin">
+          <router-link to="/dashboard/uploads" class="no-underline">
+            <i class="pi pi-users"></i>
+            <span v-if="sidebarVisible">Usuários</span>
+          </router-link>
+        </li>
         <li>
           <router-link  @click="handleLogout" to="/" class="no-underline">
             <i class="pi pi-sign-out"></i>

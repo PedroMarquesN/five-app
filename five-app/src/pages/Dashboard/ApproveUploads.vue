@@ -1,16 +1,18 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { fetchUploads, approveUpload, rejectUpload } from '../../utils/api';
-import { useToast } from 'primevue/usetoast';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
-const toast = useToast();
 const uploads = ref([]);
+const currentPage = ref(1);
+const totalPages = ref(1);
 
-
-const loadUploads = async () => {
+const loadUploads = async (page = 1) => {
   try {
-    uploads.value = await fetchUploads();
+    const response = await fetchUploads(page, 5);
+    uploads.value = response.uploads;
+    currentPage.value = response.meta.current_page;
+    totalPages.value = response.meta.last_page;
   } catch (error) {
     console.error('Erro ao buscar uploads:', error);
   }
@@ -22,37 +24,36 @@ const handleApproveUpload = async (id) => {
     const upload = uploads.value.find((upload) => upload.id === id);
     upload.status = 'aprovado';
     const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      }
-    });
-    Toast.fire({
-      icon: "success",
-      title: "Pedido Aprovado!"
-    });
-
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+Toast.fire({
+  icon: "success",
+  title: "Pedido aprovado!"
+});
   } catch (error) {
     const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      }
-    });
-    Toast.fire({
-      icon: "error",
-      title: "Pedido não aprovado!"
-    });
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+Toast.fire({
+  icon: "error",
+  title: "Erro ao aprovar pedido"
+});
   }
 };
 
@@ -61,24 +62,49 @@ const handleRejectUpload = async (id) => {
     await rejectUpload(id);
     const upload = uploads.value.find((upload) => upload.id === id);
     upload.status = 'rejeitado';
-    Swal.fire({
-      position: "top-end",
-      title: "Foto Rejeitada!",
-      icon: "success",
-      timer: 1500,
-    });
+    const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+Toast.fire({
+  icon: "success",
+  title: "Foto rejeitada!"
+});
   } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Algo Deu errado",
-
-    });
+    const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+Toast.fire({
+  icon: "error",
+  title: "Erro ao rejeitar foto"
+});
   }
 };
 
-onMounted(loadUploads);
+onMounted(() => loadUploads());
+
+const changePage = (newPage) => {
+  if (newPage > 0 && newPage <= totalPages.value) {
+    loadUploads(newPage);
+  }
+};
 </script>
+
 <template>
   <section class="approve-uploads">
     <h1>Aprovação de Uploads</h1>
@@ -108,10 +134,14 @@ onMounted(loadUploads);
         </tr>
       </tbody>
     </table>
+
+    <div class="pagination" v-if="totalPages > 1">
+      <button :disabled="currentPage === 1" @click="changePage(currentPage - 1)">Anterior</button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <button :disabled="currentPage === totalPages" @click="changePage(currentPage + 1)">Próxima</button>
+    </div>
   </section>
 </template>
-
-
 
 <style scoped>
 .approve-uploads {
@@ -161,5 +191,33 @@ button:hover {
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.pagination button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Estilos personalizados para SweetAlert2 */
+.swal2-popup {
+  width: 300px !important;
+  font-size: 14px !important;
 }
 </style>

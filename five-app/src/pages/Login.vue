@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from '../composables/useAuth.ts';
+import Swal from 'sweetalert2';
 
 const router = useRouter();
 
@@ -16,7 +17,21 @@ try{
   await login(username.value, password.value);
   push('/dashboard');
 } catch (error) {
-  console.error(error);
+  const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+Toast.fire({
+  icon: "error",
+  title: "credenciais inválidas"
+});
 }
 };
 const navigateToRegister = () => {
