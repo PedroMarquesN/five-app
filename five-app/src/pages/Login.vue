@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from '../composables/useAuth.ts';
 
-
+const router = useRouter();
 
 const username = ref('');
 const password = ref('');
