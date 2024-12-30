@@ -153,41 +153,39 @@ table {
   width: 100%;
   margin-top: 2rem;
   border-collapse: collapse;
-  font-family: 'Poppins', sans-serif; /* Fonte mais moderna */
+  font-family: 'Poppins', sans-serif; 
   color: #333;
 }
 
 table th, table td {
   padding: 1.2rem;
   text-align: left;
-  border-bottom: 1px solid #e0e0e0;  /* Cor mais suave para linhas */
+  border-bottom: 1px solid #e0e0e0;  
   font-size: 1rem;
 }
 
 table th {
-  background-color: #f1f1f1;  /* Fundo suave para cabeçalho */
+  background-color: #f1f1f1;  
   font-weight: bold;
   color: #555;
-  width: 25%;  /* Largura fixa para as colunas */
+  width: 25%;  
 }
 
 table td {
   background-color: #fff;
   color: #666;
   font-weight: normal;
-  word-wrap: break-word; /* Garante que o texto longos quebre e não ultrapasse */
-  width: 25%;  /* Largura fixa para as colunas */
+  word-wrap: break-word; 
+  width: 25%;  
 }
 
 table tr:hover {
-  background-color: #f9f9f9; /* Destaque ao passar o mouse */
+  background-color: #f9f9f9; 
 }
 
-/* Estilização dos botões */
+
 button {
-  background-color: #4caf50;  /* Verde para "Ativar" */
   color: #fff;
-  padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 30px;
   cursor: pointer;
@@ -197,21 +195,27 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;  /* Cor mais escura para hover */
-  transform: translateY(-3px); /* Levanta o botão */
+  background-color: #45a049;  
+  transform: translateY(-3px); 
 }
 
 button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }
+button.activate, button.deactivate {
+  width: 120px;
+  height: 30px;
+  font-size: 0.8rem;
+  white-space: nowrap;
 
+}
 button.activate {
-  background-color: #4caf50; /* Verde para "Ativar" */
+  background-color: #4caf50; 
 }
 
 button.deactivate {
-  background-color: #f44336; /* Vermelho para "Desativar" */
+  background-color: #f44336;
 }
 
 button.activate:hover {
@@ -263,9 +267,5 @@ button.deactivate:hover {
 }
 
 
-.swal2-popup {
-  width: 320px !important;
-  font-size: 16px !important;
-  font-family: 'Poppins', sans-serif;
-}
+
 </style>

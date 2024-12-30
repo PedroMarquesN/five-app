@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <!-- Navbar -->
+   
     <header class="navbar">
       <button class="menu-toggle" @click="toggleSidebar">
         <i class="pi pi-bars"></i>
@@ -8,7 +8,7 @@
       <h1>F <span style="color: #ff6347;">I</span> V E</h1>
     </header>
 
-    <!-- Sidebar -->
+    
     <aside class="sidebar" :class="{ open: sidebarVisible }">
       <div class="profile">
         <span v-if="sidebarVisible">Username</span>
@@ -96,7 +96,7 @@ const toggleSidebar = () => {
   overflow: hidden;
 }
 
-/* Navbar */
+
 .navbar {
   position: fixed;
   top: 0;
@@ -130,7 +130,7 @@ const toggleSidebar = () => {
   color: #ff6347;
 }
 
-/* Sidebar */
+
 .sidebar {
   position: fixed;
   top: 60px;
