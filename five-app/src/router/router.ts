@@ -44,6 +44,12 @@ const routes = [
         name: 'upload-photos',
       },
       {
+        path:'users',
+        component: () => import('../pages/Dashboard/Users.vue'),
+        name: 'users',
+        meta: { requiresAdmin: true },
+      },
+      {
         path: 'approve-uploads',
         component: () => import('../pages/Dashboard/ApproveUploads.vue'),
         name: 'approve-uploads',
