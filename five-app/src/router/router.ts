@@ -47,7 +47,7 @@ const routes = [
         path: 'approve-uploads',
         component: () => import('../pages/Dashboard/ApproveUploads.vue'),
         name: 'approve-uploads',
-       
+        meta: { requiresAdmin: true }, 
       }
     ]
   }
@@ -59,18 +59,25 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const { isAuthenticated , isAdmin } = useAuth();
+  const { isAuthenticated, isAdmin } = useAuth();
 
+  
   if (to.name === 'login' && isAuthenticated.value) {
-      next('/dashboard');
+    return next('/dashboard');
   }
+
 
   if (to.meta.requiresAuth && !isAuthenticated.value) {
-      next('/login');
-  } else {
-      next();
+    return next('/login');
   }
 
+ 
+  if (to.meta.requiresAdmin && isAuthenticated.value && !isAdmin.value) {
+    return next('/dashboard');  
+  }
+
+
+  next();
 });
 
-export default router
+export default router;

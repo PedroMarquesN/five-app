@@ -1,107 +1,132 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import { fetchUploads, approveUpload, rejectUpload } from '../../utils/api';
+import { useToast } from 'primevue/usetoast';
+
+const toast = useToast();
+const uploads = ref([]);
+
+
+
+const loadUploads = async () => {
+  try {
+    uploads.value = await fetchUploads();
+  } catch (error) {
+    console.error('Erro ao buscar uploads:', error);
+  }
+};
+
+const handleApproveUpload = async (id) => {
+  try {
+    await approveUpload(id);
+    const upload = uploads.value.find((upload) => upload.id === id);
+    upload.status = 'aprovado';
+    toast.add({
+      severity: 'success',
+      summary: 'Foto aprovada',
+      detail: 'A foto foi aprovada com sucesso!',
+    });
+  } catch (error) {
+    console.error('Erro ao aprovar a foto:', error);
+    alert('Erro ao aprovar a foto');
+  }
+};
+
+const handleRejectUpload = async (id) => {
+  try {
+    await rejectUpload(id);
+    const upload = uploads.value.find((upload) => upload.id === id);
+    upload.status = 'rejeitado';
+    alert('Foto rejeitada com sucesso!');
+  } catch (error) {
+    console.error('Erro ao rejeitar a foto:', error);
+    alert('Erro ao rejeitar a foto');
+  }
+};
+
+onMounted(loadUploads);
+</script>
 <template>
-    <section class="approve-uploads">
-      <h1>Aprovação de Uploads</h1>
-      <p>Aqui você pode aprovar ou rejeitar uploads feitos pelos usuários.</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Foto</th>
-            <th>Título</th>
-            <th>Data</th>
-            <th>Enviado por</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(upload, index) in uploads" :key="index">
-           
-            <td><img :src="upload.image" alt="Upload" class="upload-img" /></td>
-            <td>{{ upload.title }}</td>
-            <td>{{ upload.date }}</td>
-            <td>{{ upload.user }}</td>
-            <td>
-              <button @click="approveUpload(index)">Aprovar</button>
-              <button @click="rejectUpload(index)">Rejeitar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  
-  const uploads = ref([
-    {
-      photo: 'product1.jpg',
-      title: 'Foto 1',
-      date: '01/01/2022',
-      user: 'João Silva',
-      image: new URL('../../assets/product1.jpg', import.meta.url).href
-    },
-    {
-      photo: 'product2.jpg',
-      title: 'Foto 2',
-      date: '01/02/2022',
-      user: 'Maria Souza',
-      image: new URL('../../assets/product2.jpg', import.meta.url).href
-    }
-  ]);
-  
-  const approveUpload = (index) => {
-    
-    console.log('Aprovado', uploads.value[index]);
-  };
-  
-  const rejectUpload = (index) => {
-    
-    console.log('Rejeitado', uploads.value[index]);
-  };
-  </script>
-  
-  <style scoped>
-  .approve-uploads {
-    padding: 2rem;
-    color: #746767;
-  }
-  
-  .approve-uploads h1 {
-    font-size: 2rem;
-    color: #ff6347;
-  }
-  
-  table {
-    width: 100%;
-    margin-top: 2rem;
-    border-collapse: collapse;
-  }
-  
-  table th,
-  table td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .upload-img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 5px;
-  }
-  
-  button {
-    background-color: #ff6347;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 0.5rem;
-  }
-  
-  button:hover {
-    background-color: #e04e36;
-  }
-  </style>
+  <section class="approve-uploads">
+    <h1>Aprovação de Uploads</h1>
+    <p>Aqui você pode aprovar ou rejeitar uploads feitos pelos usuários.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Foto</th>
+          <th>Título</th>
+          <th>Data</th>
+          <th>Enviado por</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="upload in uploads" :key="upload.id">
+          <td><img :src="upload.image" alt="Upload" class="upload-img" /></td>
+          <td>{{ upload.titulo }}</td>
+          <td>{{upload.criado_em}}</td>
+          <td>{{ upload.user.name }}</td>
+          <td>{{ upload.status }}</td>
+          <td>
+            <button v-if="upload.status === 'pendente'" @click="handleApproveUpload(upload.id)">Aprovar</button>
+            <button v-if="upload.status === 'pendente'" @click="handleRejectUpload(upload.id)">Rejeitar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</template>
+
+
+
+<style scoped>
+.approve-uploads {
+  padding: 2rem;
+  color: #746767;
+}
+
+.approve-uploads h1 {
+  font-size: 2rem;
+  color: #ff6347;
+}
+
+table {
+  width: 100%;
+  margin-top: 2rem;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.upload-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #ff6347;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+button:hover {
+  background-color: #e04e36;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+</style>
