@@ -1,13 +1,6 @@
 import { apiRequest } from './apiRequest';
 
-interface Upload {
-  id: number;
-  titulo: string;
-  status: string;
-  created_at: string;
-  user: string;
-  caminho: string;
-}
+
 interface UploadResponse {
   id: number;
   titulo: string;
@@ -22,25 +15,8 @@ export interface Meta {
   limit: number;
 }
 
-interface FetchUploadsResponse {
-  uploads: {
-    id: number;
-    titulo: string;
-    status: string;
-    criado_em: string;
-    user: string;
-    image: string;
-  }[];
-  meta: Meta;
-}
-interface ApiResponse {
-  id: number;
-  titulo: string;
-  status: string;
-  created_at: string;
-  user: string;
-  caminho: string;
-}
+
+
 
 
 

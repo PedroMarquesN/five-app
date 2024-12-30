@@ -1,11 +1,5 @@
 
 
-interface ApiRequestOptions {
-    url: string;
-    method?: string;
-    body?: any;
-    additionalHeaders?: Record<string, string>;
-}
 
 interface ErrorResponse {
     message?: string;
