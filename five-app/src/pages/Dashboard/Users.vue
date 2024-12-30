@@ -124,8 +124,16 @@ const changePage = (newPage) => {
           <td>{{ user.email }}</td>
           <td>{{ user.is_admin ? 'Administrador' : 'Usuário' }}</td>
           <td>
-            <button v-if="!user.is_admin" @click="handleActivateUser(user.id)">Ativar</button>
-            <button v-if="user.is_admin" @click="handleDeactivateUser(user.id)">Desativar</button>
+            <button 
+              v-if="!user.is_admin" 
+              @click="handleActivateUser(user.id)"
+              class="activate"
+            >Ativar</button>
+            <button 
+              v-if="user.is_admin" 
+              @click="handleDeactivateUser(user.id)"
+              class="deactivate"
+            >Desativar</button>
           </td>
         </tr>
       </tbody>
@@ -140,47 +148,97 @@ const changePage = (newPage) => {
 </template>
 
 <style scoped>
-.manage-users {
-  padding: 2rem;
-  color: #746767;
-}
-
-.manage-users h1 {
-  font-size: 2rem;
-  color: #ff6347;
-}
 
 table {
   width: 100%;
   margin-top: 2rem;
   border-collapse: collapse;
+  font-family: 'Poppins', sans-serif; /* Fonte mais moderna */
+  color: #333;
 }
 
-table th,
-table td {
-  padding: 1rem;
+table th, table td {
+  padding: 1.2rem;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e0e0e0;  /* Cor mais suave para linhas */
+  font-size: 1rem;
 }
 
+table th {
+  background-color: #f1f1f1;  /* Fundo suave para cabeçalho */
+  font-weight: bold;
+  color: #555;
+  width: 25%;  /* Largura fixa para as colunas */
+}
+
+table td {
+  background-color: #fff;
+  color: #666;
+  font-weight: normal;
+  word-wrap: break-word; /* Garante que o texto longos quebre e não ultrapasse */
+  width: 25%;  /* Largura fixa para as colunas */
+}
+
+table tr:hover {
+  background-color: #f9f9f9; /* Destaque ao passar o mouse */
+}
+
+/* Estilização dos botões */
 button {
-  background-color: #ff6347;
+  background-color: #4caf50;  /* Verde para "Ativar" */
   color: #fff;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 30px;
   cursor: pointer;
-  margin-right: 0.5rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-  background-color: #e04e36;
+  background-color: #45a049;  /* Cor mais escura para hover */
+  transform: translateY(-3px); /* Levanta o botão */
 }
 
 button:disabled {
-  background-color: #ccc;
+  background-color: #cccccc;
   cursor: not-allowed;
 }
+
+button.activate {
+  background-color: #4caf50; /* Verde para "Ativar" */
+}
+
+button.deactivate {
+  background-color: #f44336; /* Vermelho para "Desativar" */
+}
+
+button.activate:hover {
+  background-color: #45a049;
+}
+
+button.deactivate:hover {
+  background-color: #e53935;
+}
+
+
+.manage-users h1 {
+  font-size: 2rem;
+  color: #ff6347;
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.manage-users p {
+  color: #777;
+  font-size: 1rem;
+  margin-top: 1rem;
+  font-family: 'Roboto', sans-serif;
+}
+
 
 .pagination {
   display: flex;
@@ -204,9 +262,10 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Estilos personalizados para SweetAlert2 */
+
 .swal2-popup {
-  width: 300px !important;
-  font-size: 14px !important;
+  width: 320px !important;
+  font-size: 16px !important;
+  font-family: 'Poppins', sans-serif;
 }
 </style>

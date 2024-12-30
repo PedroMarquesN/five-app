@@ -24,36 +24,36 @@ const handleApproveUpload = async (id) => {
     const upload = uploads.value.find((upload) => upload.id === id);
     upload.status = 'aprovado';
     const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  }
-});
-Toast.fire({
-  icon: "success",
-  title: "Pedido aprovado!"
-});
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Pedido aprovado!"
+    });
   } catch (error) {
     const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  }
-});
-Toast.fire({
-  icon: "error",
-  title: "Erro ao aprovar pedido"
-});
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "error",
+      title: "Erro ao aprovar pedido"
+    });
   }
 };
 
@@ -63,36 +63,36 @@ const handleRejectUpload = async (id) => {
     const upload = uploads.value.find((upload) => upload.id === id);
     upload.status = 'rejeitado';
     const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  }
-});
-Toast.fire({
-  icon: "success",
-  title: "Foto rejeitada!"
-});
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Foto rejeitada!"
+    });
   } catch (error) {
     const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  }
-});
-Toast.fire({
-  icon: "error",
-  title: "Erro ao rejeitar foto"
-});
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "error",
+      title: "Erro ao rejeitar foto"
+    });
   }
 };
 
@@ -126,10 +126,10 @@ const changePage = (newPage) => {
           <td>{{ upload.titulo }}</td>
           <td>{{ upload.criado_em }}</td>
           <td>{{ upload.user.name }}</td>
-          <td>{{ upload.status }}</td>
+          <td :class="[upload.status, 'uppercase']">{{ upload.status }}</td>
           <td>
-            <button v-if="upload.status === 'pendente'" @click="handleApproveUpload(upload.id)">Aprovar</button>
-            <button v-if="upload.status === 'pendente'" @click="handleRejectUpload(upload.id)">Rejeitar</button>
+            <button class="ativar" @click="handleApproveUpload(upload.id)">Aprovar</button>
+            <button class="desativar" @click="handleRejectUpload(upload.id)">Rejeitar</button>
           </td>
         </tr>
       </tbody>
@@ -174,22 +174,41 @@ table td {
   border-radius: 5px;
 }
 
-button {
-  background-color: #ff6347;
+.ativar {
+  background-color: #4caf50;  
   color: #fff;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 30px;
   cursor: pointer;
-  margin-right: 0.5rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.desativar {
+  background-color: #d32405;  
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.desativar:hover {
+  background-color: #d32405;  
+  transform: translateY(-3px); 
 }
 
 button:hover {
-  background-color: #e04e36;
+  background-color: #45a049; 
+  transform: translateY(-3px); 
 }
 
 button:disabled {
-  background-color: #ccc;
+  background-color: #cccccc;
   cursor: not-allowed;
 }
 
@@ -215,9 +234,24 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Estilos personalizados para SweetAlert2 */
-.swal2-popup {
-  width: 300px !important;
-  font-size: 14px !important;
+
+
+
+.pendente {
+  color: #ff9800; 
+  font-weight: bold;
+}
+
+.aprovado {
+  color: #4caf50; 
+  font-weight: bold;
+}
+
+.rejeitado {
+  color: #f44336; 
+  font-weight: bold;
+}
+.uppercase {
+  text-transform: uppercase;
 }
 </style>

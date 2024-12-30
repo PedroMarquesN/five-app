@@ -4,8 +4,8 @@
       <div class="profile-info">
         <img src="../../assets/avatar.png" alt="Avatar" class="avatar"/>
         <div>
-          <h2>Nome do Usuário</h2>
-          <p>Email: usuario@dominio.com</p>
+          <h2>{{userName}}</h2>
+          <p>Email: {{userEmail}}</p>
           <p>Data de Registro: 01/01/2022</p>
         </div>
       </div>
@@ -14,6 +14,9 @@
   </template>
   
   <script setup>
+import { useAuth } from '../../composables/useAuth';
+
+  const {userName, userEmail} = useAuth();
   const editProfile = () => {
 
   };

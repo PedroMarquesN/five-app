@@ -14,48 +14,48 @@
         <span v-if="sidebarVisible">Username</span>
       </div>
       <ul>
-        <li>
-          <router-link to="/dashboard" class="no-underline">
+        <router-link to="/dashboard" class="no-underline">
+          <li>
             <i class="pi pi-home"></i>
             <span v-if="sidebarVisible">Home</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/dashboard/profile" class="no-underline">
+          </li>
+        </router-link>
+        <router-link to="/dashboard/profile" class="no-underline">
+          <li>
             <i class="pi pi-user"></i>
             <span v-if="sidebarVisible">Profile</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/dashboard/settings" class="no-underline">
+          </li>
+        </router-link>
+        <router-link to="/dashboard/settings" class="no-underline">
+          <li>
             <i class="pi pi-cog"></i>
             <span v-if="sidebarVisible">Configurações</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/dashboard/upload-photos" class="no-underline">
+          </li>
+        </router-link>
+        <router-link to="/dashboard/upload-photos" class="no-underline">
+          <li>
             <i class="pi pi-upload"></i>
             <span v-if="sidebarVisible">Upload Photos</span>
-          </router-link>
-        </li>
-        <li v-if="isAdmin">
-          <router-link to="/dashboard/approve-uploads" class="no-underline">
+          </li>
+        </router-link>
+        <router-link v-if="isAdmin" to="/dashboard/approve-uploads" class="no-underline">
+          <li>
             <i class="pi pi-check-circle"></i>
             <span v-if="sidebarVisible">Aprovação Uploads</span>
-          </router-link>
-        </li>
-        <li v-if="isAdmin">
-          <router-link to="/dashboard/users" class="no-underline">
+          </li>
+        </router-link>
+        <router-link v-if="isAdmin" to="/dashboard/users" class="no-underline">
+          <li>
             <i class="pi pi-users"></i>
             <span v-if="sidebarVisible">Usuários</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link  @click="handleLogout" to="/" class="no-underline">
+          </li>
+        </router-link>
+        <router-link @click="handleLogout" to="/" class="no-underline">
+          <li>
             <i class="pi pi-sign-out"></i>
             <span v-if="sidebarVisible">Logout</span>
-          </router-link>
-        </li>
+          </li>
+        </router-link>
       </ul>
     </aside>
 
@@ -71,7 +71,7 @@ import { useAuth } from '../composables/useAuth';
 
 const { logout, isAdmin } = useAuth();
 const sidebarVisible = ref(false);
-console.log(isAdmin.value);
+
 
 
 const handleLogout = () => {
@@ -139,7 +139,6 @@ const toggleSidebar = () => {
   width: 60px;
   background: #ffffff;
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1), 2px 0 8px rgba(0, 0, 0, 0.1);
-  transition: width 0.3s ease-in-out;
   overflow: hidden;
 }
 
@@ -195,7 +194,7 @@ const toggleSidebar = () => {
   font-weight: 500;
 }
 
-/* Conteúdo Principal */
+
 .content {
   flex: 1;
   overflow: auto;
@@ -215,7 +214,7 @@ const toggleSidebar = () => {
   gap: 1.5rem;
 }
 
-/* Cards */
+
 .card {
   background: #fff;
   border-radius: 10px;
